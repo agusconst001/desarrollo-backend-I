@@ -1,0 +1,13 @@
+{
+  "name": "mi-proyecto",
+  "version": "1.0.0",
+  "description": "API de productos y carritos con Node.js y Express",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
