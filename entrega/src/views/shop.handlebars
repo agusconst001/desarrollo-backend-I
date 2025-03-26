@@ -1,0 +1,35 @@
+<h1>Tienda</h1>
+<ul>
+    {{#each products}}
+        <li>
+            {{this.title}} - ${{this.price}}
+            <a href="/products/{{this._id}}">Detalles</a>
+            <button onclick="addToCart('{{this._id}}')">Agregar al carrito</button>
+        </li>
+    {{/each}}
+</ul>
+{{#if hasPrevPage}}
+    <a href="{{prevLink}}">Anterior</a>
+{{/if}}
+Página {{page}} de {{totalPages}}
+{{#if hasNextPage}}
+    <a href="{{nextLink}}">Siguiente</a>
+{{/if}}
+
+<script>
+    let cartId = localStorage.getItem('cartId');
+    if (!cartId) {
+        fetch('/api/carts', { method: 'POST' })
+            .then(res => res.json())
+            .then(data => {
+                cartId = data._id;
+                localStorage.setItem('cartId', cartId);
+            });
+    }
+
+    function addToCart(pid) {
+        fetch(`/api/carts/${cartId}/product/${pid}`, { method: 'POST' })
+            .then(() => alert('Producto agregado al carrito'))
+            .catch(err => console.error('Error:', err));
+    }
+</script>

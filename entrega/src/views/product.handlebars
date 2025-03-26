@@ -1,0 +1,23 @@
+<h1>{{product.title}}</h1>
+<p>{{product.description}}</p>
+<p><strong>Precio:</strong> ${{product.price}}</p>
+<p><strong>Categoría:</strong> {{product.category}}</p>
+<button onclick="addToCart('{{product._id}}')">Agregar al carrito</button>
+<script></script>
+    let cartId = localStorage.getItem('cartId');
+    if (!cartId) {
+        fetch('/api/carts', { method: 'POST' })
+            .then(res => res.json())
+            .then(data => {
+                cartId = data._id;
+                localStorage.setItem('cartId', cartId);
+            });
+    }
+
+    function addToCart(pid) {
+        fetch(`/api/carts/${cartId}/product/${pid}`, { method: 'POST' })
+            .then(() => alert('Producto agregado al carrito'))
+            .catch(err => console.error('Error:', err));
+    }
+</script>
+</script>
